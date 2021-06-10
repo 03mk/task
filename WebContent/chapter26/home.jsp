@@ -33,7 +33,7 @@
 </tr>
 
 <tr>
-<td><a href="../chapter26/incoming.jsp">入荷</a></td>
+<td><a href="IncomingData.action">入荷</a></td>
 <td><a href="">入荷伝票</a></td>
 <td><a href="">仕入先情報</a></td>
 </tr>

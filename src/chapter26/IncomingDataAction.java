@@ -1,16 +1,16 @@
 package chapter26;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.stream.JsonWriter;
+import bean.Incoming;
+import dao.ProductDAO;
+import dao.SupplierDAO;
+import dao.WarehouseDAO;
+import dao.EmployeeDAO;
 
-import bean.IncomingData;
-import dao.IncomingDataDAO;
 import tool.Action;
 
 public class IncomingDataAction extends Action {
@@ -18,32 +18,24 @@ public class IncomingDataAction extends Action {
 		HttpServletRequest request, HttpServletResponse response
 		) throws Exception {
 
-			IncomingDataDAO dao=new IncomingDataDAO();
-			List<IncomingData> list=dao.search();
+			ProductDAO proDao=new ProductDAO();     //商品マスタ(材料マスタ)
+			SupplierDAO supDao=new SupplierDAO();   //仕入先マスタ
+			WarehouseDAO warDao=new WarehouseDAO(); //倉庫マスタ
+			EmployeeDAO empDao = new EmployeeDAO(); //社員マスタ
 
-			File file = new File("C:\\pleiades\\workspace\\testproj1\\WebContent\\chapter26\\incomingData.json");
+			//データベースから取得したデータをそれぞれリストに代入
+			List<Incoming> proList=proDao.search();
+			List<Incoming> supList=supDao.search();
+			List<Incoming> warList=warDao.search();
+			List<Incoming> empList=empDao.search();
 
-			//Jsonファイルに書き出し
-			try (JsonWriter writer = new JsonWriter(new FileWriter(file))) {
-				writer.setIndent(" ");
-		        writer.beginArray();
+			//リクエスト属性に設定する
+			request.setAttribute("supList", supList);
+			request.setAttribute("proList", proList);
+			request.setAttribute("warList", warList);
+			request.setAttribute("empList", empList);
 
-		        for (IncomingData item : list) {
-		        	writer.beginObject();
-		        	writer.name("incomingNumber").value(item.getIncomingNumber());
-		        	writer.name("productCode").value(item.getProductCode());
-		        	writer.name("supplierCode").value(item.getSupplierCode());
-		        	writer.name("warehouseCode").value(item.getWarehouseCode());
-		        	writer.name("incomingDate").value(item.getIncomingDate());
-		        	writer.name("personName").value(item.getPersonName());
-		        	writer.name("volume").value(item.getVolume());
-		        	writer.name("price").value(item.getPrice());
-		        	writer.endObject();
-		        }
 
-		        writer.endArray();
-		    }
-
-			return "search_db.jsp";
+			return "incoming.jsp";
 	}
 }

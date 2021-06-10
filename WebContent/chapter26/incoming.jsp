@@ -5,19 +5,46 @@
 <%@page contentType="text/html; charset=UTF-8" %>
 <%@include file="../header.html" %>
 
+
 <p>入荷入力</p>
 <hr>
-<%--項目が空欄の場合エラーメッセージ --%>
-<form action="Incoming.action" method="post">
-<p>商品コード:<input type="text" name="productCode" required></p>
-<p>仕入先名:<input type="text" name="supplierCode" required></p>
-<p>倉庫名:<input type="text" name="warehouseCode" required></p>
-<p>入荷日:<input type="date" name="incomingDate" required></p>
-<p>入荷担当者:<input type="text" name="personName" required></p>
-<p>数量:<input type="text" name="volume" required></p>
-<p>単価:<input type="text" name="price" required></p>
 
+     商品コード<select form="IncomingForm" name="productCode">
+        <option selected disabled hidden>選んでください</option>
+        <c:forEach var="item" items="${proList}">
+        	<option value="${item.productCode}">${item.productCode}</option>
+        </c:forEach>
+    </select>
 
-<p><input type="submit" value="入荷データ登録"></p>
-</form>
+     仕入先コード<select form="IncomingForm" name="supplierCode">
+        <option selected disabled hidden>選んでください</option>
+        <c:forEach var="item" items="${supList}">
+        	<option value="${item.supplierCode}">${item.supplierCode}</option>
+        </c:forEach>
+    </select>
+
+     倉庫コード<select form="IncomingForm" name="warehouseCode">
+        <option selected disabled hidden>選んでください</option>
+        <c:forEach var="item" items="${warList}">
+        	<option value="${item.warehouseCode}">${item.warehouseCode}</option>
+        </c:forEach>
+    </select>
+
+     <p>入荷日:<input type="date" form="IncomingForm" name="incomingDate" required></p>
+
+     担当者名<select form="IncomingForm" name="personName">
+        <option selected disabled hidden>選んでください</option>
+        <c:forEach var="item" items="${empList}">
+        	<option value="${item.personName}">${item.personName}</option>
+        </c:forEach>
+    </select>
+
+     <p>数量<input type="text" form="IncomingForm" name="volume" required></p>
+
+     <p>単価<input type="text" form="IncomingForm" name="price" required></p>
+
+<p><button type="submit" form="IncomingForm">入荷データの登録と実在庫数の更新</button></p>
+
+<form action="Incoming.action" method="post" id="IncomingForm"></form>
+
 <%@include file="../footer.html" %>
