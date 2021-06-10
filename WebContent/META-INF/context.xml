@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<!-- 上記はEclipseの警告を消すための記述です。 -->
+
+
+<Context reloadable="true">
+  <Resource
+      name="jdbc/book"
+      auth="Container"
+      type="javax.sql.DataSource"
+      driverClassName="org.mariadb.jdbc.Driver"
+      url="jdbc:mysql://localhost:3306/book?zeroDateTimeBehavior=convertToNull"
+      username="root"
+      password="testpass"
+      validationQuery="select 0"
+      factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"/>
+ </Context>
+
+<!--
+<Context reloadable="true">
+	<Resource
+		name="jdbc/book2"
+		auth="Container"
+		type="javax.sql.DataSource"
+		driverClassName="org.h2.Driver"
+		url="jdbc:h2:tcp://localhost/~/book2"
+		username="sa"
+		password=""
+	/>
+</Context>
+-->

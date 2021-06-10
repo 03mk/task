@@ -1,0 +1,3 @@
+debug=no
+memory=524288
+network=12.34.56.78

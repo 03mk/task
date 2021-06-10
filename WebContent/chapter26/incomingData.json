@@ -1,0 +1,22 @@
+[
+ {
+  "incomingNumber": 1,
+  "productCode": "aaaa",
+  "supplierCode": "bbbb",
+  "warehouseCode": "ccc",
+  "incomingDate": "2021-06-01",
+  "personName": "dddd",
+  "volume": 10,
+  "price": 100
+ },
+ {
+  "incomingNumber": 2,
+  "productCode": "eeee",
+  "supplierCode": "ffff",
+  "warehouseCode": "ggg",
+  "incomingDate": "2021-06-02",
+  "personName": "hhhh",
+  "volume": 42,
+  "price": 1023
+ }
+]
