@@ -18,25 +18,44 @@ public class IncomingDAO extends DAO {
 
 		Connection con=getConnection();
 
-		PreparedStatement st=con.prepareStatement(
-			"select * from incoming_data where supplier_code like ?");
-		st.setString(1, supplierCode);
-		ResultSet rs=st.executeQuery();
+		PreparedStatement proSt=con.prepareStatement(
+				"select * from product_master");
+		PreparedStatement supSt=con.prepareStatement(
+				"select * from supplier_master");
+		PreparedStatement warSt=con.prepareStatement(
+				"select * from warehouse_master");
+		PreparedStatement empSt=con.prepareStatement(
+				"select * from employee_master");
 
-		while (rs.next()) {
+		ResultSet proRs=proSt.executeQuery();
+		ResultSet supRs=supSt.executeQuery();
+		ResultSet warRs=warSt.executeQuery();
+		ResultSet empRs=empSt.executeQuery();
+
+		while (proRs.next()) {
 			Incoming i=new Incoming();
-			i.setIncomingNumber(rs.getInt("incoming_number"));
-			i.setProductCode(rs.getString("product_code"));
-			i.setSupplierCode(rs.getString("supplier_code"));
-			i.setWarehouseCode(rs.getString("worehouse_code"));
-			i.setIncomingDate(rs.getString("incoming_date"));
-			i.setPersonName(rs.getString("person_name"));
-			i.setVolume(rs.getInt("volume"));
-			i.setPrice(rs.getInt("price"));
+			i.setProductCode(proRs.getString("product_code"));
 			list.add(i);
 		}
-
-		st.close();
+		while (proRs.next()) {
+			Incoming i=new Incoming();
+			i.setSupplierCode(supRs.getString("supplier_code"));
+			list.add(i);
+		}
+		while (proRs.next()) {
+			Incoming i=new Incoming();
+			i.setWarehouseCode(warRs.getString("warehouse_code"));
+			list.add(i);
+		}
+		while (proRs.next()) {
+			Incoming i=new Incoming();
+			i.setPersonName(empRs.getString("person_name"));
+			list.add(i);
+		}
+		proSt.close();
+		supSt.close();
+		warSt.close();
+		empSt.close();
 		con.close();
 
 		return list;
